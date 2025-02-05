@@ -337,9 +337,17 @@ def name_compatibility(name1, name2):
 
 # Age Difference
 def age_difference(birth_date1, birth_date2):
-    age1 = datetime.datetime.now() - birth_date1
-    age2 = datetime.datetime.now() - birth_date2
-    return abs(age1.days - age2.days) / 365.25
+    # Extract year, month, and day from tuples
+    year1, month1, day1 = birth_date1
+    year2, month2, day2 = birth_date2
+
+    # Approximate total days lived
+    days1 = year1 * 365 + month1 * 30 + day1
+    days2 = year2 * 365 + month2 * 30 + day2
+
+    # Convert days to years and return absolute difference
+    return abs(days1 - days2) / 365.25
+
 
 # Star Sign Compatibility (Fictional)
 def star_sign_compatibility(sign1, sign2):
@@ -383,7 +391,9 @@ def superhero_power_match(hero1_powers, hero2_powers):
 
 # Luck Factor
 def luck_factor(birth_date):
-    lucky_number = sum(int(digit) for digit in str(birth_date.month)) + birth_date.day
+    """Calculates a 'luck factor' based on birth month and day."""
+    month, day = birth_date  # Unpack tuple (month, day)
+    lucky_number = sum(int(digit) for digit in str(month)) + day
     return lucky_number % 100  # Fake luck factor
 
 # Weather Probability
@@ -417,10 +427,12 @@ def paradox_resolution_probability(paradox_type):
 
 # Astrological Life Path Number
 def life_path_number(birth_date):
-    number = sum(int(digit) for digit in str(birth_date.year) + str(birth_date.month) + str(birth_date.day))
+    year, month, day = birth_date  # Unpack the tuple
+    number = sum(int(digit) for digit in str(year) + str(month) + str(day))
     while number > 9:
         number = sum(int(digit) for digit in str(number))
     return number
+
 
 # Social Media Success Probability
 def social_media_success_probability(followers, posts, engagement):
@@ -428,10 +440,10 @@ def social_media_success_probability(followers, posts, engagement):
 
 # Happiness Quotient
 def happiness_quotient(birth_date):
-    base_score = birth_date.year % 100  # Just a fake example based on year
+    year, month, day = birth_date  # Unpack the tuple
+    base_score = year % 100  # Extract last two digits of the year
     return base_score * random.uniform(0.5, 1.5)
 
-import math
 
 # Speed Calculation
 def speed(distance, time):
@@ -566,8 +578,6 @@ def inductance(num_turns, flux, current):
     if current == 0:
         raise ValueError("Current cannot be zero")
     return num_turns * flux / current
-
-import math
 
 # Calculate Basal Metabolic Rate (BMR) using the Mifflin-St Jeor Equation
 def bmr(weight, height, age, gender):
